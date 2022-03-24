@@ -1,5 +1,9 @@
 # Changes
 
+## 0.16.0+3
+
+- fix sqlite dependency
+
 ## 0.16.0+2
 
 - fix [DataRef.compareTo]
