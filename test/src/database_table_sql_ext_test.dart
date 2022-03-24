@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
-import 'package:atmos_database/src/data_string.dart';
-import 'package:atmos_database/src/table_dict.dart';
+import 'package:atmos_database/atmos_database.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:test/test.dart';
 

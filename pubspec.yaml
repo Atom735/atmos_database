@@ -1,6 +1,6 @@
 name: atmos_database
 description: Library for atmos create database tables and use it by Atom735
-version: 0.16.0+1
+version: 0.16.0+2
 homepage: https://github.com/Atom735/atmos_database
 
 environment:

@@ -26,12 +26,16 @@ class DatabaseTableDict extends DatabaseTable<DataString> {
   DataString dartEncode(List value) => DataString(value[0], value[1]);
 
   /// Add new values to table
-  void addValues(List<String> values) {
-    sqlInsertNewsUnqiueValues(values.map(DataString.v).toList(), [columnValue]);
+  void addValues(Iterable<String> values) =>
+      addValuesV(values.map(DataString.v));
+
+  /// Add new values to table
+  void addValuesV(Iterable<DataString> values) {
+    sqlInsertNewsUnqiueValues(values.toList(), [columnValue]);
   }
 
   /// Get values
-  Iterable<DataString> getValuesContainde(List<String> values) =>
+  Iterable<DataString> getValuesContained(List<String> values) =>
       sqlSelectByColumns({columnValue: values});
 
   /// Search values
@@ -46,7 +50,7 @@ class DatabaseTableDict extends DatabaseTable<DataString> {
     final sb = StringBuffer();
     final binds = [];
     if (searchPattern.isNotEmpty) {
-      sb.write(' $nameFts = ?');
+      sb.write('WHERE $nameFts = ?');
       binds.add(searchPattern);
       if (order != DatabaseTableDictOrderType.unorderer) {
         sb.write(' ORDER BY ');
@@ -99,11 +103,11 @@ class DatabaseTableDict extends DatabaseTable<DataString> {
     }
     if (searchPattern.isNotEmpty) {
       if (highlights) {
-        return sqlSelectFtsHl(sb.toString());
+        return sqlSelectFtsHl(sb.toString(), binds);
       }
-      return sqlSelectFts(sb.toString());
+      return sqlSelectFts(sb.toString(), binds);
     }
-    return sqlSelect(sb.toString());
+    return sqlSelect(sb.toString(), binds);
   }
 }
 

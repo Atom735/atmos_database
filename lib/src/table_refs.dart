@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:sqlite3/sqlite3.dart';
 
 import 'columns_integer.dart';
@@ -25,4 +27,32 @@ class DatabaseTableRefs extends DatabaseTable<DataRef> {
 
   @override
   DataRef dartEncode(List value) => DataRef(value[0], value[1], value[2]);
+
+  /// Add new values to table
+  void addValues(Iterable<DataRef> values) {
+    final vals =
+        values is SplayTreeSet<DataRef> ? values : SplayTreeSet.of(values);
+    sqlInsert(vals.difference(SplayTreeSet.of(getByRefs(vals))));
+  }
+
+  Iterable<DataRef> getByRowids(Iterable<int> ids) => sqlSelect(
+        'WHERE ROWID IN (${sqlQueryRowBindings(ids.length)})',
+        ids.toList(),
+      );
+
+  Iterable<DataRef> getByA(Iterable<int> ids) => sqlSelect(
+        'WHERE ${columnA.name} IN (${sqlQueryRowBindings(ids.length)})',
+        ids.toList(),
+      );
+
+  Iterable<DataRef> getByB(Iterable<int> ids) => sqlSelect(
+        'WHERE ${columnB.name} IN (${sqlQueryRowBindings(ids.length)})',
+        ids.toList(),
+      );
+
+  Iterable<DataRef> getByRefs(Iterable<DataRef> values) {
+    final vals =
+        values is SplayTreeSet<DataRef> ? values : SplayTreeSet.of(values);
+    return getByA(vals.map((e) => e.idA)).where(vals.contains);
+  }
 }

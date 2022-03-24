@@ -164,7 +164,12 @@ abstract class DatabaseTableSqlX<T> extends DatabaseTableSqlQueriesX<T> {
   Iterable<T> sqlSelectByColumns(Map<DatabaseColumn, List> m,
           {bool and = true}) =>
       sqlSelectByColumnsRaw(
-        m.map((key, value) => MapEntry(key, key.dartDecode(value))),
+        m.map(
+          (key, value) => MapEntry(
+            key,
+            value.map(key.dartDecode).toList(),
+          ),
+        ),
         and: and,
       ).map(dartEncodeRaw);
 

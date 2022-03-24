@@ -242,7 +242,7 @@ class DatabaseColumnRef extends DatabaseColumnUnsignedBase<int> {
     String name,
     String refTableName, {
     String refColumnName = 'ROWID',
-    bool unique = true,
+    bool unique = false,
   }) : super(
           name,
           constraints: 'REFERENCES $refTableName($refColumnName)',

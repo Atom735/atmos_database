@@ -4,6 +4,10 @@ import 'package:meta/meta.dart';
 class DataRef implements Comparable<DataRef> {
   const DataRef(this.id, this.idA, this.idB);
   const DataRef.v(this.idA, this.idB) : id = 0;
+  DataRef.me(MapEntry<int, int> e)
+      : id = 0,
+        idA = e.key,
+        idB = e.value;
 
   /// Айди записи
   final int id;
@@ -31,7 +35,7 @@ class DataRef implements Comparable<DataRef> {
   int compareTo(DataRef other) {
     final i = idA.compareTo(other.idA);
     if (i != 0) return i;
-    return idB.compareTo(idB);
+    return idB.compareTo(other.idB);
   }
 
   @override
