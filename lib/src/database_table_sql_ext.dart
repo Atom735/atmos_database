@@ -14,7 +14,7 @@ abstract class DatabaseTableSqlX<T> extends DatabaseTableSqlQueriesX<T> {
   void sqlDrop() => sql.execute(sqlQueryDropAllTables());
 
   /// Insert `dart` [T] objects to SQLite table
-  void sqlInsert(Iterable<T> data) => sqlInsertRaw(data.map(dartDecode));
+  void sqlInsert(Iterable<T> data) => sqlInsertRaw(data.map(dartDecodeRaw));
 
   /// Insert `raw` values to SQLite table
   void sqlInsertRaw(Iterable<List> data) {
