@@ -4,10 +4,22 @@ import 'package:meta/meta.dart';
 import 'database_column.dart';
 
 final _sw = Stopwatch()..start();
-final _swBegins = DateTime.now().toUtc().microsecondsSinceEpoch;
+var _swBegins = DateTime.now().toUtc().microsecondsSinceEpoch;
+
+var _swLast = 0;
 
 /// Gets unique timestamp for now (microsecondsSinceEpoch)
-int getTimestamp() => _swBegins + _sw.elapsedMicroseconds;
+int getTimestamp() {
+  final i = _swBegins + _sw.elapsedMicroseconds;
+  if (_swLast >= i) return ++_swLast;
+  return i;
+}
+
+/// Refresh timestamps ticker offset
+void refreshTimestampDateTime() {
+  _swBegins = DateTime.now().toUtc().microsecondsSinceEpoch;
+  _sw.reset();
+}
 
 /// Offset of timestamp for store data, contains micro
 /// Declaring column who contain integer value, must to be const

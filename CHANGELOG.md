@@ -1,5 +1,9 @@
 # Changes
 
+## 0.16.1
+
+- fix timestamp getter for unique value all times
+
 ## 0.16.0+4
 
 - fix insert my date time
